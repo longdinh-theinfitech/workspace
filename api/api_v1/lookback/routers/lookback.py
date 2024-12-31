@@ -17,17 +17,17 @@ async def generate_lookback(request: LookbackRequest, db: Session = Depends(get_
     limit_accounts = 15
     result = crawl_service.crawl_tweets(db, request.screen_name, limit_accounts)
     response = None
-    time.sleep(30)
-    query = db.exec(select(Lookback).where(Lookback.screen_name == request.screen_name)).first()
-    if query is not None:
-        response = query
-
+    start_time = time.time()
+    while response is None and (time.time() - start_time) < 120:
+        query = db.exec(select(Lookback).where(Lookback.screen_name == request.screen_name))
+        response = query.first()
+        time.sleep(1)
     twitter_account = get_user_detail_by_screen_name(db, request.screen_name)
-
+    message = response.model_dump()
     return LookbackResponse(
         name=twitter_account.name,
         screen_name=twitter_account.screen_name,
         followers_count=twitter_account.followers_count,
         following_count=twitter_account.following_count,
-        **json.loads(response.lookback_msg)
+        **json.loads(message["lookback_msg"])
     )
