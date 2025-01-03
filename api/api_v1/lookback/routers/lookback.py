@@ -31,7 +31,7 @@ async def generate_lookback(request: LookbackRequest, db: Session = Depends(get_
     result = crawl_service.crawl_tweets(db, request.screen_name, limit_accounts)
     response = None
     start_time = time.time()
-    while response is None and (time.time() - start_time) < 40:
+    while response is None and (time.time() - start_time) < 60:
         query = db.exec(select(Lookback).where(Lookback.screen_name == request.screen_name))
         response = query.first()
         time.sleep(0.5)
