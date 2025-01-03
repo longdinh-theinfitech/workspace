@@ -9,7 +9,6 @@ def create_user(db: Session, request: UserCreateRequest):
         db.exec(update(User).where(User.twitter_id == request.twitter_id).values(**request.model_dump()))
         db.commit()
         db.refresh(existing_user)
-        
         return existing_user.model_dump()
 
     new_user = User(

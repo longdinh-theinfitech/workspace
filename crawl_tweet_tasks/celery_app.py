@@ -9,4 +9,5 @@ celery_crawler = Celery(
     queue_name,
     broker="sqla+postgresql://postgres:postgres@base-db:5432/lookback",
     result_backend='db+postgresql://postgres:postgres@base-db:5432/lookback',
+    # task_always_eager=True,
 )

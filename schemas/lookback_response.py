@@ -16,4 +16,6 @@ class LookbackResponse(BaseModel):
     interest: Optional[List[str]] = Field(None, title="キーワード")
     topics: Optional[List[str]] = Field(None, title="トピック")
     description: Optional[str] = Field(None, title="説明")
+    time_gap: Optional[str] = Field(None, title="時間差")
+    is_blue_verified: Optional[bool] = Field(None, title="公式アカウント")
                                                                                                                                         
