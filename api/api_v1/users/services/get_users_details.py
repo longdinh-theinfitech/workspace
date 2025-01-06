@@ -13,5 +13,5 @@ def get_user_detail(db: Session, twitter_id: str):
 
 
 def get_user_detail_by_screen_name(db: Session, screen_name: str):
-    user = db.exec(select(User).where(User.screen_name == screen_name)).first()
+    user = db.exec(select(User).where(User.screen_name.ilike(f"{screen_name}"))).first()
     return user

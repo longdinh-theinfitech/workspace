@@ -296,7 +296,7 @@ def entry_task(self: Task, screen_name: str, account: dict):
         if not tweets:
             return []
         results = analyze_tweets(user, tweets)
-        save_analysis_result(screen_name, results)
+        save_analysis_result(user["screen_name"], results)
         return results
     except Exception:
         print(traceback.format_exc())
